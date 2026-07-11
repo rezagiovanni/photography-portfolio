@@ -1,38 +1,65 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Placeholder gallery items. Real photos will be wired to GCS/CDN later.
+// Placeholder gallery. Real photos wired to GCS/CDN in Phase 3.
 const photos = [
-  { src: '/placeholder/01.jpg', title: 'Placeholder 01', w: 800, h: 600 },
-  { src: '/placeholder/02.jpg', title: 'Placeholder 02', w: 800, h: 600 },
-  { src: '/placeholder/03.jpg', title: 'Placeholder 03', w: 800, h: 600 },
-  { src: '/placeholder/04.jpg', title: 'Placeholder 04', w: 800, h: 600 },
-  { src: '/placeholder/05.jpg', title: 'Placeholder 05', w: 800, h: 600 },
-  { src: '/placeholder/06.jpg', title: 'Placeholder 06', w: 800, h: 600 },
+  { file: '01', title: 'Golden Hour', w: 800, h: 1200 },
+  { file: '02', title: 'City Lines', w: 1200, h: 800 },
+  { file: '03', title: 'Still Life', w: 1000, h: 1000 },
+  { file: '04', title: 'Portrait', w: 800, h: 1100 },
+  { file: '05', title: 'Horizon', w: 1200, h: 900 },
+  { file: '06', title: 'Quiet', w: 900, h: 1200 },
+  { file: '07', title: 'Motion', w: 1100, h: 800 },
+  { file: '08', title: 'Form', w: 1000, h: 1000 },
+  { file: '09', title: 'Shadow', w: 800, h: 1000 },
 ];
 ---
 
-<BaseLayout title="Gallery — Photography Portfolio">
-  <h1>Gallery</h1>
-  <p class="lead">Selected works. (Placeholder images — real photos coming soon.)</p>
-  <section class="grid">
+<BaseLayout title="Studio — Photography Portfolio">
+  <section class="hero">
+    <p class="eyebrow">Photography Portfolio</p>
+    <h1>Capturing light,<br />one frame at a time.</h1>
+    <p class="sub">Portraits, landscapes &amp; the quiet moments in between.</p>
+    <a class="cta" href="/contact/">Work with me →</a>
+  </section>
+
+  <section class="gallery">
     {photos.map((p) => (
-      <figure class="card">
-        <img src={p.src} alt={p.title} width={p.w} height={p.h} loading="lazy" />
-        <figcaption>{p.title}</figcaption>
-      </figure>
+      <a
+        class="tile"
+        href={`/placeholder/${p.file}.jpg`}
+        data-lightbox
+        data-src={`/placeholder/${p.file}.jpg`}
+        data-alt={p.title}
+      >
+        <img src={`/placeholder/${p.file}.jpg`} alt={p.title} width={p.w} height={p.h} loading="lazy" />
+        <span class="caption">{p.title}</span>
+      </a>
     ))}
   </section>
 </BaseLayout>
 
 <style>
-  .lead { color: var(--muted); }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1rem;
+  .hero { text-align: center; padding: 6rem 1rem 4rem; }
+  .eyebrow { color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; font-size: 0.78rem; margin: 0 0 1rem; }
+  .hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1.05; margin: 0 auto; max-width: 14ch; }
+  .hero .sub { color: var(--muted); margin: 1.4rem auto 2rem; max-width: 40ch; }
+  .cta { display: inline-block; border: 1px solid var(--accent); color: var(--accent); padding: 0.7rem 1.6rem; border-radius: 999px; font-size: 0.9rem; letter-spacing: 0.05em; transition: all 0.2s; }
+  .cta:hover { background: var(--accent); color: #000; }
+
+  .gallery {
+    columns: 3; column-gap: 1rem; padding: 2rem 0 1rem;
   }
-  .card { margin: 0; background: #161617; border-radius: 8px; overflow: hidden; }
-  .card img { width: 100%; height: auto; display: block; }
-  .card figcaption { padding: 0.6rem 0.8rem; color: var(--muted); font-size: 0.9rem; }
+  .tile { display: block; position: relative; margin: 0 0 1rem; break-inside: avoid; overflow: hidden; border-radius: 6px; }
+  .tile img { width: 100%; height: auto; display: block; transition: transform 0.4s ease, filter 0.4s; filter: grayscale(15%); }
+  .tile:hover img { transform: scale(1.04); filter: grayscale(0); }
+  .tile .caption {
+    position: absolute; left: 0; bottom: 0; width: 100%; padding: 1.4rem 1rem 0.8rem;
+    font-family: var(--serif); font-size: 1.05rem; color: #fff;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7)); opacity: 0; transition: opacity 0.3s;
+  }
+  .tile:hover .caption { opacity: 1; }
+
+  @media (max-width: 900px) { .gallery { columns: 2; } }
+  @media (max-width: 560px) { .gallery { columns: 1; } .hero { padding: 4rem 1rem 3rem; } }
 </style>

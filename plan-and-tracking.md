@@ -16,8 +16,8 @@
 
 | # | Phase | Task | Tools | Status |
 |---|-------|------|-------|--------|
-| 1 | Setup | Repo GitHub + project structure Astro | GitHub, local | ⬜ |
-| 2 | Design | Template gallery/about/contact + responsive | Astro | ⬜ |
+| 1 | Setup | Repo GitHub `rezagiovanni/photography-portfolio` + Astro scaffold | GitHub, local | ✅ |
+| 2 | Design | Template gallery/about/contact + responsive (scaffold done, polish needed) | Astro | 🔄 |
 | 3 | Storage | **BUCKET BARU** GCS + folder foto + thumbnail (label: photography-project) | Cloud Storage | ⬜ |
 | 4 | CDN | Enable CDN + cache config (label: photography-project) | Cloud CDN | ⬜ |
 | 5 | Domain | Cloud DNS zone khusus `portofolio.rezagiovanni.my.id` + delegasi NS di parent + SSL | Cloud DNS | ⬜ |

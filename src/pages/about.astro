@@ -2,7 +2,35 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About — Photography Portfolio">
-  <h1>About</h1>
-  <p>Tentang photographer — isi bio di sini. (Konten placeholder.)</p>
+<BaseLayout title="About — Studio">
+  <section class="about">
+    <div class="portrait">
+      <img src="/placeholder/04.jpg" alt="Photographer portrait" width="800" height="1100" loading="lazy" />
+    </div>
+    <div class="bio">
+      <p class="eyebrow">About</p>
+      <h1>The person behind the lens</h1>
+      <p>
+        [Bio placeholder] — Seorang fotografer yang suka menangkap cahaya dan
+        momen tenang di antara kesibukan. Spesialisasi dalam portrait, landscape,
+        dan street photography.
+      </p>
+      <p>
+        [Placeholder] Pendekatan visual yang minimalis namun emosional —
+        setiap frame punya cerita.
+      </p>
+      <a class="cta" href="/contact/">Get in touch →</a>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .about { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 3rem; align-items: center; padding: 4rem 0; }
+  .portrait img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .eyebrow { color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; font-size: 0.78rem; margin: 0 0 0.8rem; }
+  .bio h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 1.4rem; }
+  .bio p { color: var(--muted); margin: 0 0 1.2rem; max-width: 48ch; }
+  .cta { display: inline-block; border: 1px solid var(--accent); color: var(--accent); padding: 0.7rem 1.6rem; border-radius: 999px; font-size: 0.9rem; transition: all 0.2s; }
+  .cta:hover { background: var(--accent); color: #000; }
+  @media (max-width: 760px) { .about { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 0; } }
+</style>
