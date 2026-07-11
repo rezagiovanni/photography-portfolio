@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Placeholder gallery items. Real photos will be wired to GCS/CDN later.
+const photos = [
+  { src: '/placeholder/01.jpg', title: 'Placeholder 01', w: 800, h: 600 },
+  { src: '/placeholder/02.jpg', title: 'Placeholder 02', w: 800, h: 600 },
+  { src: '/placeholder/03.jpg', title: 'Placeholder 03', w: 800, h: 600 },
+  { src: '/placeholder/04.jpg', title: 'Placeholder 04', w: 800, h: 600 },
+  { src: '/placeholder/05.jpg', title: 'Placeholder 05', w: 800, h: 600 },
+  { src: '/placeholder/06.jpg', title: 'Placeholder 06', w: 800, h: 600 },
+];
+---
+
+<BaseLayout title="Gallery — Photography Portfolio">
+  <h1>Gallery</h1>
+  <p class="lead">Selected works. (Placeholder images — real photos coming soon.)</p>
+  <section class="grid">
+    {photos.map((p) => (
+      <figure class="card">
+        <img src={p.src} alt={p.title} width={p.w} height={p.h} loading="lazy" />
+        <figcaption>{p.title}</figcaption>
+      </figure>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .lead { color: var(--muted); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .card { margin: 0; background: #161617; border-radius: 8px; overflow: hidden; }
+  .card img { width: 100%; height: auto; display: block; }
+  .card figcaption { padding: 0.6rem 0.8rem; color: var(--muted); font-size: 0.9rem; }
+</style>
