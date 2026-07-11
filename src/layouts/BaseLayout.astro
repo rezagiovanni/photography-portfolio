@@ -2,8 +2,9 @@
 interface Props {
   title: string;
   description?: string;
+  transparentNav?: boolean;
 }
-const { title, description = 'Photography portfolio' } = Astro.props;
+const { title, description = 'Photography portfolio', transparentNav = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,7 +23,7 @@ const { title, description = 'Photography portfolio' } = Astro.props;
     />
   </head>
   <body>
-    <header class="site-header">
+    <header id="site-header" class={`site-header${transparentNav ? ' transparent' : ''}`}>
       <a class="brand" href="/">STUDIO<span>.</span></a>
       <nav>
         <a href="/">Gallery</a>
@@ -62,6 +63,17 @@ const { title, description = 'Photography portfolio' } = Astro.props;
     </div>
 
     <script>
+      // Transparent navbar -> solid on scroll (only when .transparent is set, i.e. home)
+      const header = document.getElementById('site-header')!;
+      if (header.classList.contains('transparent')) {
+        const onScroll = () => {
+          if (window.scrollY > 60) header.classList.add('scrolled');
+          else header.classList.remove('scrolled');
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+
       const lb = document.getElementById('lightbox')!;
       const lbImg = lb.querySelector('.lb-img') as HTMLImageElement;
       document.querySelectorAll('[data-lightbox]').forEach((el) => {
@@ -114,12 +126,31 @@ const { title, description = 'Photography portfolio' } = Astro.props;
   .site-header {
     display: flex; justify-content: space-between; align-items: center;
     padding: 1.6rem 2.5rem; border-bottom: 1px solid var(--line);
-    position: sticky; top: 0; background: rgba(247,245,240,0.9); backdrop-filter: blur(8px); z-index: 50;
+    position: fixed; top: 0; left: 0; right: 0; background: rgba(247,245,240,0.9); backdrop-filter: blur(8px); z-index: 50;
+    transition: background 0.35s ease, border-color 0.35s ease, padding 0.35s ease;
   }
+  /* Home: hero is full-bleed behind the transparent navbar (no top padding) */
+  main { padding-top: 0; }
+  /* Other pages: push content below the fixed navbar */
+  .site-header:not(.transparent) + main { padding-top: 5.5rem; padding-left: 2.5rem; padding-right: 2.5rem; }
+  .site-header.transparent {
+    background: transparent; backdrop-filter: none; border-bottom-color: transparent; padding: 2rem 2.5rem;
+  }
+  .site-header.transparent .brand,
+  .site-header.transparent nav a { color: #f7f5f0; text-shadow: 0 1px 12px rgba(0,0,0,0.4); }
+  .site-header.transparent.scrolled {
+    background: rgba(247,245,240,0.92); backdrop-filter: blur(10px); border-bottom-color: var(--line); padding: 1.4rem 2.5rem;
+  }
+  .site-header.transparent.scrolled .brand,
+  .site-header.transparent.scrolled nav a { color: var(--muted); text-shadow: none; }
+  .site-header.transparent.scrolled nav a:hover { color: var(--fg); }
+  .site-header.scrolled { border-bottom-color: var(--line); }
   .brand { font-family: var(--serif); font-size: 1.6rem; letter-spacing: 0.12em; }
   .brand span { color: var(--accent); }
-  nav a { margin-left: 2rem; color: var(--muted); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  nav a { position: relative; margin-left: 2rem; color: var(--muted); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.25s; }
+  nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 1.5px; background: currentColor; transform: scaleX(0); transform-origin: center; transition: transform 0.3s ease; }
   nav a:hover { color: var(--fg); }
+  nav a:hover::after { transform: scaleX(1); }
   main { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
   .site-footer { background: #efece4; margin-top: 6rem; padding: 4rem 2.5rem 2rem; border-top: 1px solid var(--line); }
   .foot-cols { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; }

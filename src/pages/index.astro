@@ -15,7 +15,7 @@ const photos = [
 ];
 ---
 
-<BaseLayout title="Studio — Photography Portfolio">
+<BaseLayout title="Studio — Photography Portfolio" transparentNav={true}>
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-inner">
@@ -57,13 +57,17 @@ const photos = [
 <style>
   .hero {
     position: relative;
-    min-height: 88vh;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     overflow: hidden;
-    margin: 0 -2.5rem;
   }
   .hero-bg {
     position: absolute;
@@ -106,6 +110,6 @@ const photos = [
   .tile .cat { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
   .tile .title { font-family: var(--serif); font-size: 1.25rem; color: #fff; }
 
-  @media (max-width: 900px) { .gallery { columns: 2; } .hero { margin: 0 -1.4rem; } }
-  @media (max-width: 560px) { .gallery { columns: 1; } .hero { min-height: 70vh; } .intro { padding: 4rem 1rem 2rem; } }
+  @media (max-width: 900px) { .gallery { columns: 2; } }
+  @media (max-width: 560px) { .gallery { columns: 1; } .hero { min-height: 100vh; } .intro { padding: 4rem 1rem 2rem; } }
 </style>
