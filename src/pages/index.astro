@@ -3,15 +3,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 // Placeholder gallery. Real photos wired to GCS/CDN in Phase 3.
 const photos = [
-  { file: '01', title: 'Golden Hour', w: 800, h: 1200 },
-  { file: '02', title: 'City Lines', w: 1200, h: 800 },
-  { file: '03', title: 'Still Life', w: 1000, h: 1000 },
-  { file: '04', title: 'Portrait', w: 800, h: 1100 },
-  { file: '05', title: 'Horizon', w: 1200, h: 900 },
-  { file: '06', title: 'Quiet', w: 900, h: 1200 },
-  { file: '07', title: 'Motion', w: 1100, h: 800 },
-  { file: '08', title: 'Form', w: 1000, h: 1000 },
-  { file: '09', title: 'Shadow', w: 800, h: 1000 },
+  { file: '01', title: 'Golden Hour', cat: 'Portrait', w: 800, h: 1200 },
+  { file: '02', title: 'City Lines', cat: 'Street', w: 1200, h: 800 },
+  { file: '03', title: 'Still Life', cat: 'Studio', w: 1000, h: 1000 },
+  { file: '04', title: 'Portrait', cat: 'Portrait', w: 800, h: 1100 },
+  { file: '05', title: 'Horizon', cat: 'Landscape', w: 1200, h: 900 },
+  { file: '06', title: 'Quiet', cat: 'Landscape', w: 900, h: 1200 },
+  { file: '07', title: 'Motion', cat: 'Street', w: 1100, h: 800 },
+  { file: '08', title: 'Form', cat: 'Studio', w: 1000, h: 1000 },
+  { file: '09', title: 'Shadow', cat: 'Portrait', w: 800, h: 1000 },
 ];
 ---
 
@@ -26,6 +26,15 @@ const photos = [
     </div>
   </section>
 
+  <section class="intro">
+    <p class="eyebrow">Selected Works</p>
+    <h2>A collection of light &amp; stillness</h2>
+    <p class="lead">
+      Each frame is a study of moment and place — photographed with patience,
+      printed with care. Browse the gallery below.
+    </p>
+  </section>
+
   <section class="gallery">
     {photos.map((p) => (
       <a
@@ -36,7 +45,10 @@ const photos = [
         data-alt={p.title}
       >
         <img src={`/placeholder/${p.file}.jpg`} alt={p.title} width={p.w} height={p.h} loading="lazy" />
-        <span class="caption">{p.title}</span>
+        <div class="meta">
+          <span class="cat">{p.cat}</span>
+          <span class="title">{p.title}</span>
+        </div>
       </a>
     ))}
   </section>
@@ -45,13 +57,13 @@ const photos = [
 <style>
   .hero {
     position: relative;
-    min-height: 90vh;
+    min-height: 88vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     overflow: hidden;
-    margin: 0 -2rem;
+    margin: 0 -2.5rem;
   }
   .hero-bg {
     position: absolute;
@@ -59,35 +71,41 @@ const photos = [
     background-image: url('/placeholder/hero.jpg');
     background-size: cover;
     background-position: center;
-    filter: grayscale(25%) brightness(0.55);
+    filter: grayscale(30%) brightness(0.6);
     transform: scale(1.05);
   }
   .hero::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(13,13,15,0.35), rgba(13,13,15,0.85));
+    background: radial-gradient(ellipse at center, rgba(15,15,15,0.3), rgba(15,15,15,0.8));
   }
   .hero-inner { position: relative; z-index: 1; padding: 2rem; }
-  .eyebrow { color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; font-size: 0.78rem; margin: 0 0 1rem; }
-  .hero h1 { font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.05; margin: 0 auto; max-width: 16ch; text-shadow: 0 2px 30px rgba(0,0,0,0.5); }
-  .hero .sub { color: #d8d4cc; margin: 1.4rem auto 2rem; max-width: 42ch; }
-  .cta { display: inline-block; border: 1px solid var(--accent); color: var(--accent); padding: 0.7rem 1.6rem; border-radius: 999px; font-size: 0.9rem; letter-spacing: 0.05em; transition: all 0.2s; background: rgba(0,0,0,0.25); }
-  .cta:hover { background: var(--accent); color: #000; }
+  .eyebrow { color: var(--accent); letter-spacing: 0.28em; text-transform: uppercase; font-size: 0.78rem; margin: 0 0 1rem; }
+  .hero h1 { font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: 1.05; margin: 0 auto; max-width: 16ch; color: #f7f5f0; text-shadow: 0 2px 30px rgba(0,0,0,0.5); }
+  .hero .sub { color: #e7e3da; margin: 1.4rem auto 2rem; max-width: 42ch; }
+  .cta { display: inline-block; border: 1.5px solid #f7f5f0; color: #f7f5f0; padding: 0.75rem 1.8rem; border-radius: 999px; font-size: 0.88rem; letter-spacing: 0.06em; transition: all 0.2s; background: rgba(0,0,0,0.35); font-weight: 400; }
+  .cta:hover { background: #f7f5f0; color: #1a1a1a; }
+
+  .intro { text-align: center; padding: 6rem 1rem 3rem; max-width: 60ch; margin: 0 auto; }
+  .intro h2 { font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 1rem; }
+  .intro .lead { color: var(--muted); }
 
   .gallery {
-    columns: 3; column-gap: 1rem; padding: 2rem 0 1rem;
+    columns: 3; column-gap: 1.5rem; padding: 2rem 0 1rem;
   }
-  .tile { display: block; position: relative; margin: 0 0 1rem; break-inside: avoid; overflow: hidden; border-radius: 6px; }
-  .tile img { width: 100%; height: auto; display: block; transition: transform 0.4s ease, filter 0.4s; filter: grayscale(15%); }
-  .tile:hover img { transform: scale(1.04); filter: grayscale(0); }
-  .tile .caption {
-    position: absolute; left: 0; bottom: 0; width: 100%; padding: 1.4rem 1rem 0.8rem;
-    font-family: var(--serif); font-size: 1.05rem; color: #fff;
-    background: linear-gradient(transparent, rgba(0,0,0,0.7)); opacity: 0; transition: opacity 0.3s;
+  .tile { display: block; position: relative; margin: 0 0 1.5rem; break-inside: avoid; overflow: hidden; border-radius: 2px; background: var(--surface); }
+  .tile img { width: 100%; height: auto; display: block; transition: transform 0.5s ease, filter 0.5s; filter: grayscale(12%); }
+  .tile:hover img { transform: scale(1.05); filter: grayscale(0); }
+  .tile .meta {
+    position: absolute; left: 0; bottom: 0; width: 100%; padding: 2rem 1.2rem 1rem;
+    display: flex; flex-direction: column; gap: 0.15rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.75)); opacity: 0; transition: opacity 0.3s;
   }
-  .tile:hover .caption { opacity: 1; }
+  .tile:hover .meta { opacity: 1; }
+  .tile .cat { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .tile .title { font-family: var(--serif); font-size: 1.25rem; color: #fff; }
 
-  @media (max-width: 900px) { .gallery { columns: 2; } }
-  @media (max-width: 560px) { .gallery { columns: 1; } .hero { min-height: 70vh; margin: 0 -1.2rem; } }
+  @media (max-width: 900px) { .gallery { columns: 2; } .hero { margin: 0 -1.4rem; } }
+  @media (max-width: 560px) { .gallery { columns: 1; } .hero { min-height: 70vh; } .intro { padding: 4rem 1rem 2rem; } }
 </style>
