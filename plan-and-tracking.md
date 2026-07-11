@@ -19,8 +19,8 @@
 | 1 | Setup | Repo GitHub `rezagiovanni/photography-portfolio` + Astro scaffold | GitHub, local | ✅ |
 | 2 | Design | Hero + masonry gallery + lightbox + about/contact polish + real photos | Astro | ✅ |
 | 3 | Storage | **BUCKET BARU** `photography-portfolio-reza-2026` (asia-southeast2) + label `photography-project` + folder original/thumbnails + 9 foto ter-upload | Cloud Storage | ✅ |
-| 4 | CDN | Enable CDN + cache config (label: photography-project) | Cloud CDN | ⬜ |
-| 5 | Domain | Cloud DNS zone khusus `portofolio.rezagiovanni.my.id` + delegasi NS di parent + SSL | Cloud DNS | ⬜ |
+| 4 | Delivery | Public bucket tanpa LB — foto via `c.storage.googleapis.com/...` (no CDN edge, termurah) | Cloud Storage | ✅ |
+| 5 | Domain | Subdomain `portofolio.rezagiovanni.my.id` → bucket `portofolio.rezagiovanni.my.id` (nama=domain, public) via CNAME di parent DNS ke `c.storage.googleapis.com` (NO GCP DNS zone — CNAME-at-apex gak allowed utk GCS no-LB). **PENDING: lo input CNAME `portofolio` di registrar parent.** | Cloud DNS | 🔄 |
 | 6 | Deploy | Hosting (GCS/Cloud Run) + Cloud Build CI (label: photography-project) | Cloud Build, Cloud Run | ⬜ |
 | 7 | Contact | Form (Formspree atau Cloud Function) | — / Cloud Functions | ⬜ |
 | 8 | Launch | Test + DNS propagate + announce | — | ⬜ |
