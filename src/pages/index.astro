@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Placeholder gallery. Real photos wired to GCS/CDN in Phase 3.
+// Photos served from GCS bucket (Phase 3). Public URL base:
+const GCS = 'https://storage.googleapis.com/photography-portfolio-reza-2026/original';
 const photos = [
   { file: '01', title: 'Golden Hour', cat: 'Portrait', w: 800, h: 1200 },
   { file: '02', title: 'City Lines', cat: 'Street', w: 1200, h: 800 },
@@ -17,7 +18,7 @@ const photos = [
 
 <BaseLayout title="Studio — Photography Portfolio" transparentNav={true}>
   <section class="hero">
-    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-bg" aria-hidden="true" style={`background-image: url('${GCS}/hero.jpg')`}></div>
     <div class="hero-inner">
       <p class="eyebrow">Photography Portfolio</p>
       <h1>Capturing light,<br />one frame at a time.</h1>
@@ -39,12 +40,12 @@ const photos = [
     {photos.map((p) => (
       <a
         class="tile"
-        href={`/placeholder/${p.file}.jpg`}
+        href={`${GCS}/${p.file}.jpg`}
         data-lightbox
-        data-src={`/placeholder/${p.file}.jpg`}
+        data-src={`${GCS}/${p.file}.jpg`}
         data-alt={p.title}
       >
-        <img src={`/placeholder/${p.file}.jpg`} alt={p.title} width={p.w} height={p.h} loading="lazy" />
+        <img src={`${GCS}/${p.file}.jpg`} alt={p.title} width={p.w} height={p.h} loading="lazy" />
         <div class="meta">
           <span class="cat">{p.cat}</span>
           <span class="title">{p.title}</span>

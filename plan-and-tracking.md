@@ -18,7 +18,7 @@
 |---|-------|------|-------|--------|
 | 1 | Setup | Repo GitHub `rezagiovanni/photography-portfolio` + Astro scaffold | GitHub, local | ✅ |
 | 2 | Design | Hero + masonry gallery + lightbox + about/contact polish + real photos | Astro | ✅ |
-| 3 | Storage | **BUCKET BARU** GCS + folder foto + thumbnail (label: photography-project) | Cloud Storage | ⬜ |
+| 3 | Storage | **BUCKET BARU** `photography-portfolio-reza-2026` (asia-southeast2) + label `photography-project` + folder original/thumbnails + 9 foto ter-upload | Cloud Storage | ✅ |
 | 4 | CDN | Enable CDN + cache config (label: photography-project) | Cloud CDN | ⬜ |
 | 5 | Domain | Cloud DNS zone khusus `portofolio.rezagiovanni.my.id` + delegasi NS di parent + SSL | Cloud DNS | ⬜ |
 | 6 | Deploy | Hosting (GCS/Cloud Run) + Cloud Build CI (label: photography-project) | Cloud Build, Cloud Run | ⬜ |
