@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Photos served from GCS bucket (Phase 3/5). Public URL base (custom domain):
-const GCS = 'https://portofolio.rezagiovanni.my.id/original';
+// Photos served from GCS bucket (Phase 3/5). Relative path so it follows page protocol
+// (works on both http:// and https:// once GCS SSL is provisioned).
+const GCS = '/original';
 const photos = [
   { file: '01', title: 'Golden Hour', cat: 'Portrait', w: 800, h: 1200 },
   { file: '02', title: 'City Lines', cat: 'Street', w: 1200, h: 800 },

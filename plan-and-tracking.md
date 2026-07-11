@@ -21,7 +21,7 @@
 | 3 | Storage | **BUCKET BARU** `photography-portfolio-reza-2026` (asia-southeast2) + label `photography-project` + folder original/thumbnails + 9 foto ter-upload | Cloud Storage | ✅ |
 | 4 | Delivery | Public bucket tanpa LB — foto via `c.storage.googleapis.com/...` (no CDN edge, termurah) | Cloud Storage | ✅ |
 | 5 | Domain | Subdomain `portofolio.rezagiovanni.my.id` → bucket `portofolio.rezagiovanni.my.id` (nama=domain, public) via CNAME di parent DNS ke `c.storage.googleapis.com` (NO GCP DNS zone — CNAME-at-apex gak allowed utk GCS no-LB). **PENDING: lo input CNAME `portofolio` di registrar parent.** | Cloud DNS | 🔄 |
-| 6 | Deploy | Hosting (GCS/Cloud Run) + Cloud Build CI (label: photography-project) | Cloud Build, Cloud Run | ⬜ |
+| 6 | Deploy | Cloud Build (cloudbuild.yaml) build Astro → deploy `dist/` ke bucket `portofolio.rezagiovanni.my.id` root. **Manual build VERIFIED SUCCESS** (`gcloud builds submit`). Auto-trigger GitHub pending (lo setup di console). | Cloud Build, Cloud Storage | ✅ (manual) |
 | 7 | Contact | Form (Formspree atau Cloud Function) | — / Cloud Functions | ⬜ |
 | 8 | Launch | Test + DNS propagate + announce | — | ⬜ |
 
