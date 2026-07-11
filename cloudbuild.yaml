@@ -1,0 +1,43 @@
+# Cloud Build config — Phase 6: deploy Astro static site to GCS bucket (custom domain)
+# Bucket: portofolio.rezagiovanni.my.id  (root = HTML, original/ = photos)
+# All GCP resources labeled photography-project for billing trace.
+steps:
+  # 1. Install deps
+  - id: install
+    name: node:22
+    entrypoint: npm
+    args: ['ci']
+
+  # 2. Build static site -> dist/
+  - id: build
+    name: node:22
+    entrypoint: npm
+    args: ['run', 'build']
+
+  # 3. Upload site to bucket root (no -d, so original/ photos are preserved)
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gsutil
+    args:
+      - '-m'
+      - 'cp'
+      - '-r'
+      - 'dist/*'
+      - 'gs://portofolio.rezagiovanni.my.id/'
+
+  # 4. Set Cache-Control: HTML short TTL (assets in original/ keep default long cache)
+  - id: cache-html
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gsutil
+    args:
+      - '-m'
+      - 'setmeta'
+      - '-r'
+      - '-h'
+      - 'Cache-Control:public,max-age=300'
+      - 'gs://portofolio.rezagiovanni.my.id/**.html'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_MEDIUM
+tags: ['photography-project']
