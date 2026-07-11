@@ -52,6 +52,13 @@ const { title, description = 'Photography portfolio', transparentNav = false } =
           <a href="#">Behance</a>
           <a href="/contact/">Email</a>
         </div>
+        <div>
+          <p class="foot-head">Theme</p>
+          <a href="/?theme=1">Gallery</a>
+          <a href="/?theme=2">Noir</a>
+          <a href="/?theme=3">Editorial</a>
+          <a href="/?theme=4">Mono</a>
+        </div>
       </div>
       <p class="foot-copy">&copy; {new Date().getFullYear()} Studio. All rights reserved.</p>
     </footer>
@@ -63,6 +70,21 @@ const { title, description = 'Photography portfolio', transparentNav = false } =
     </div>
 
     <script>
+      // Theme switcher (home only) — reads ?theme=N or localStorage, applies data-theme
+      const THEME_KEY = 'studio-theme';
+      const params = new URLSearchParams(window.location.search);
+      // Only apply theme switching on the home page ('/'); other pages stay on theme 1
+      if (window.location.pathname === '/' || window.location.pathname === '') {
+        let theme = params.get('theme');
+        if (theme) {
+          localStorage.setItem(THEME_KEY, theme);
+        } else {
+          theme = localStorage.getItem(THEME_KEY) || '1';
+        }
+        if (!['1','2','3','4'].includes(theme)) theme = '1';
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+
       // Transparent navbar -> solid on scroll (only when .transparent is set, i.e. home)
       const header = document.getElementById('site-header')!;
       if (header.classList.contains('transparent')) {
@@ -182,4 +204,70 @@ const { title, description = 'Photography portfolio', transparentNav = false } =
     main { padding: 0 1.4rem; }
     .foot-cols { grid-template-columns: 1fr; gap: 1.5rem; }
   }
+
+  /* ============ THEME 2: NOIR (dark, dramatic, cinematic) ============ */
+  [data-theme="2"] {
+    --bg: #0d0d0f;
+    --surface: #161618;
+    --fg: #f4f1ea;
+    --muted: #8c8c90;
+    --line: #242427;
+    --accent: #c9a227;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  [data-theme="2"] .site-footer { background: #161618; }
+  [data-theme="2"] .site-header.transparent.scrolled { background: rgba(13,13,15,0.92); }
+  [data-theme="2"] .hero-bg { filter: grayscale(40%) brightness(0.45) contrast(1.1); }
+  [data-theme="2"] .tile { background: var(--surface); }
+  [data-theme="2"] .tile img { filter: grayscale(35%) contrast(1.05); }
+  [data-theme="2"] .tile:hover img { filter: grayscale(0) contrast(1); }
+
+  /* ============ THEME 3: EDITORIAL (bold magazine, high contrast) ============ */
+  [data-theme="3"] {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --fg: #0a0a0a;
+    --muted: #4a4a4a;
+    --line: #0a0a0a;
+    --accent: #e63312;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  [data-theme="3"] .site-footer { background: #0a0a0a; color: #fff; }
+  [data-theme="3"] .site-footer .foot-tag,
+  [data-theme="3"] .site-footer .foot-cols a,
+  [data-theme="3"] .site-footer .foot-copy { color: #bdbdbd; }
+  [data-theme="3"] .site-footer .foot-brand,
+  [data-theme="3"] .site-footer .foot-head { color: #fff; }
+  [data-theme="3"] .foot-copy { border-top-color: #333; }
+  [data-theme="3"] .site-header { border-bottom: 2px solid #0a0a0a; font-weight: 600; }
+  [data-theme="3"] .hero-bg { filter: grayscale(100%) brightness(0.55) contrast(1.2); }
+  [data-theme="3"] .hero h1 { font-weight: 600; letter-spacing: -0.01em; }
+  [data-theme="3"] .intro h2 { font-weight: 600; }
+  [data-theme="3"] .tile img { filter: grayscale(100%) contrast(1.05); }
+  [data-theme="3"] .tile:hover img { filter: grayscale(0); }
+  [data-theme="3"] .hero .cta { background: var(--accent); border-color: var(--accent); color: #fff; }
+  [data-theme="3"] .cta { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ============ THEME 4: MONO (Swiss minimal, sans-serif, grey) ============ */
+  [data-theme="4"] {
+    --bg: #f0f0f0;
+    --surface: #ffffff;
+    --fg: #111111;
+    --muted: #666666;
+    --line: #cccccc;
+    --accent: #0066ff;
+    --serif: 'Inter', system-ui, sans-serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  [data-theme="4"] h1, [data-theme="4"] h2, [data-theme="4"] h3 { font-family: var(--sans); font-weight: 700; letter-spacing: -0.02em; }
+  [data-theme="4"] .brand { font-family: var(--sans); font-weight: 700; }
+  [data-theme="4"] .site-footer { background: #e4e4e4; }
+  [data-theme="4"] .hero-bg { filter: grayscale(100%) brightness(0.6); }
+  [data-theme="4"] .hero h1 { font-weight: 700; letter-spacing: -0.02em; }
+  [data-theme="4"] .eyebrow { letter-spacing: 0.3em; }
+  [data-theme="4"] .tile img { filter: grayscale(100%); border-radius: 0; }
+  [data-theme="4"] .tile:hover img { filter: grayscale(100%) brightness(1.1); }
+  [data-theme="4"] .cta { border-radius: 0; }
 </style>
